@@ -31,47 +31,14 @@ class PeopleScreen extends Component {
     super(props);
     this.state = {
       search: this.props.searchTerm,
-      allData: [],
+      allData: this.props.allData,
       refresh: false,
       loader: false,
       tags: [],
     };
   }
 
-  componentDidMount() {
-    this.setState({
-      loader: true,
-    });
-
-    fetch('https://www.quartrly.com:5558/users/data', {
-      method: 'GET',
-      headers: {
-        Accept: 'application/json',
-        'Content-Type': 'application/json',
-      },
-    })
-      .then(response => response.json())
-      .then(responseJson => {
-        console.log('response is=', responseJson);
-
-        if (responseJson.success) {
-          this.setState({
-            loader: false,
-            allData: responseJson.data,
-          });
-        } else {
-          this.setState({
-            loader: false,
-          });
-
-          alert('data not found');
-        }
-      })
-      .catch(error => {
-        console.log('error is', error);
-        console.error(error);
-      });
-  }
+ 
 
   closeControlPanel = () => {
     this._drawer.close();
@@ -92,34 +59,24 @@ class PeopleScreen extends Component {
       createFilter(this.state.search, KEYS_TO_FILTERS),
     );
 
-    if (this.state.loader) {
-      return (
-        <View
-          style={{
-            flex: 1,
-            justifyContent: 'center',
-            alignItems: 'center',
-            backgroundColor: '#212121',
-          }}>
-          <ActivityIndicator size="large" color="#366E3D" />
-        </View>
-      );
-    } else {
+    
       return (
         <>
           <View style={{flex: 1, backgroundColor: '#212121'}}>
             <ScrollView>
               {filteredData.map(item => {
                 return (
-                  <UserReview item={item} tags={this.state.tags}></UserReview>
+                  <UserReview item={item} tags={this.state.tags} searchTerm={this.state.search}></UserReview>
                 );
               })}
+
+              
             </ScrollView>
           </View>
         </>
       );
     }
-  }
+  
 }
 
 const styles = StyleSheet.create({

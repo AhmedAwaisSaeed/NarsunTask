@@ -44,6 +44,42 @@ class Results extends Component {
   }
 
 
+  componentDidMount() {
+    this.setState({
+      loader: true,
+    });
+
+    fetch('https://www.quartrly.com:5558/users/data', {
+      method: 'GET',
+      headers: {
+        Accept: 'application/json',
+        'Content-Type': 'application/json',
+      },
+    })
+      .then(response => response.json())
+      .then(responseJson => {
+        console.log('response is=', responseJson);
+
+        if (responseJson.success) {
+          this.setState({
+            loader: false,
+            allData: responseJson.data,
+          });
+        } else {
+          this.setState({
+            loader: false,
+          });
+
+          alert('data not found');
+        }
+      })
+      .catch(error => {
+        console.log('error is', error);
+        console.error(error);
+      });
+  }
+
+
   closeControlPanel = () => {
     this._drawer.close()
   };
@@ -128,6 +164,7 @@ class Results extends Component {
           <View style={{flex:1}}>
                 <TopNavigation
                 searchTerm={this.state.search}
+                allData={this.state.allData}
                 ></TopNavigation>
           
 

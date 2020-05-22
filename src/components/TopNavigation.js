@@ -12,7 +12,7 @@ const TopTab = createMaterialTopTabNavigator();
 const TopNavigation = (props) => {
 
     const PeopleScreenTwo = () => (
-        <PeopleScreen searchTerm={props.searchTerm} />
+        <PeopleScreen searchTerm={props.searchTerm} allData={props.allData} />
       );
       
     let term=props.searchTerm;
