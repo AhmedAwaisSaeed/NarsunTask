@@ -5,7 +5,7 @@ import {
   widthPercentageToDP as wp,
   heightPercentageToDP as hp,
 } from 'react-native-responsive-screen';
-
+import Highlighter from 'react-native-highlight-words';
 const UserReview = props => {
   return (
     <View style={styles.mainView}>
@@ -61,8 +61,17 @@ const UserReview = props => {
         <View style={{flexDirection: 'row'}}>
           {props.item.tags.map(tag => {
             return (
+
+          
               <View style={{margin: 5}}>
-                <Text style={styles.whiteText}>{tag}</Text>
+              <Highlighter
+              style={styles.whiteText}
+                  highlightStyle={{backgroundColor: 'red',color:"#FFFF"}}
+                  searchWords={[props.searchTerm]}
+                  textToHighlight={tag}>
+                  
+                  </Highlighter>
+                
               </View>
             );
           })}

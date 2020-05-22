@@ -24,6 +24,7 @@ import {
   heightPercentageToDP as hp,
 } from 'react-native-responsive-screen';
 
+
 const KEYS_TO_FILTERS = ['name', 'rating', 'tags'];
 
 class PeopleScreen extends Component {
